@@ -1,0 +1,7 @@
+// .expired {
+//   background-color: indianred;
+// }
+
+::ng-deep mat-expansion-panel.expired {
+  background-color: indianred;
+}

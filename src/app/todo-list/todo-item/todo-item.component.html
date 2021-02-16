@@ -1,0 +1,20 @@
+<div >
+  <mat-expansion-panel hideToggle [class.expired]="expired">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span style="margin-right: 5px;">
+          {{item.title}}
+        </span>
+        <mat-icon *ngIf="item.favorite">stars</mat-icon>
+      </mat-panel-title>
+      <mat-icon (click)="onEdit()">mode</mat-icon>
+      <mat-icon (click)="onDelete()">delete</mat-icon>
+      <mat-panel-description>
+        
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{item.description}}</p>
+    <p>{{item.expiry | date}}</p>
+    
+  </mat-expansion-panel>
+</div>

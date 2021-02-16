@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="header">
+    <h2>Todos</h2>
+    <button mat-mini-fab >
+      <mat-icon *ngIf="!showForm" (click)="toggleShowForm()">add</mat-icon>
+      <mat-icon *ngIf="showForm" (click)="toggleShowForm()">clear</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="todos$ | async as todos">
+    <mat-accordion [multi]="true">
+      <ng-container *ngIf="showForm">
+        <mat-expansion-panel [expanded]=showForm hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{formAction}} </mat-panel-title>
+  
+          </mat-expansion-panel-header>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+            <mat-form-field appearance="fill" >
+              <mat-label>Title</mat-label>
+              <input matInput formControlName="title"/>
+              <mat-error *ngIf="formSubmitted && f.title.invalid">This is a required field</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" >
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+              <mat-error *ngIf="formSubmitted && f.description.invalid">This is a required field</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="expiry">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="formSubmitted && f.expiry.invalid">Enter a valid value</mat-error>
+            </mat-form-field>
+            <span style="margin: 20px 0">
+              <mat-checkbox formControlName="complete" style="margin-right: 10px;">Complete</mat-checkbox>
+              <mat-checkbox formControlName="favorite">Favorite</mat-checkbox>
+            </span>
+            <button mat-raised-button>{{formAction}}</button>
+          </form>
+        </mat-expansion-panel>
+      </ng-container>
+  
+      <app-todo-item 
+        *ngFor="let item of todos" 
+        (edited)="onEdit($event)"
+        (deleted)="onDelete($event)"
+        [item]="item">
+      </app-todo-item>
+    </mat-accordion>
+
+
+  </ng-container>
+
+</div>
